@@ -1,14 +1,14 @@
-/* Создание базы данных, установка диалекта и набора символов по-умолчанию */
+/* Create database, setting sql dialect and default charset  */
 set sql dialect 3;
 set names WIN1251;
-create database 'D:\db\car_base.fdb'
+create database 'D:\db\car_database.fdb'
 user 'SYSDBA' password 'masterkey'
 default character set WIN1251;
 
-connect 'D:\db\car_base.fdb'
+connect 'D:\db\car_database.fdb'
 user 'SYSDBA' password 'masterkey';
 
-/* Создание доменов */
+/* Create domains */
 CREATE DOMAIN D_DATE AS DATE;
 CREATE DOMAIN D_INTEGER AS INTEGER;
 CREATE DOMAIN D_CHAR1 AS CHAR(1);
@@ -31,9 +31,9 @@ CREATE DOMAIN D_CHAR120 AS VARCHAR(120) COLLATE PXW_CYRL;
 CREATE DOMAIN D_CHAR1000 AS VARCHAR(1000) COLLATE PXW_CYRL;
 CREATE DOMAIN D_BLOB AS BLOB SUB_TYPE 1 SEGMENT SIZE 400;
 
-/* Создание таблиц и определение первичных ключей */
+/* Create tables and FKs  */
 CREATE TABLE "country" (
-    "cod" D_INTEGER NOT NULL,
+    "cod" D_CHAR3 NOT NULL,
     "name" D_CHAR30);
 
 ALTER TABLE "country"
@@ -43,7 +43,7 @@ PRIMARY KEY ("cod");
 CREATE TABLE "brend" (
     "cod" D_INTEGER NOT NULL,
     "name" D_CHAR30,
-    "cod_country" D_INTEGER);
+    "cod_country" D_CHAR3);
 
 ALTER TABLE "brend"
 ADD CONSTRAINT "PK_brend"
@@ -81,6 +81,7 @@ CREATE TABLE "equipment" (
     "cod" D_INTEGER NOT NULL,
     "cod_model" D_INTEGER,
     "name" D_CHAR30,
+    "date_manuf" D_INTEGER,
     "cod_engine" D_INTEGER,
     "v_engine" D_DECIMAL,
     "cod_gearbox" D_INTEGER,
@@ -179,7 +180,7 @@ ALTER TABLE "crash"
 ADD CONSTRAINT "PK_crash"
 PRIMARY KEY ("cod");
 
-/* Внешние ключи */
+/* Setting FKs */
 
 ALTER TABLE "brend"
 ADD CONSTRAINT "FK_brend_1"
