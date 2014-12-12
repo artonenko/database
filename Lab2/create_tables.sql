@@ -33,7 +33,7 @@ CREATE DOMAIN D_BLOB AS BLOB SUB_TYPE 1 SEGMENT SIZE 400;
 
 /* Создание таблиц и определение первичных ключей */
 CREATE TABLE "country" (
-    "cod" D_CHAR3 NOT NULL,
+    "cod" D_INTEGER NOT NULL,
     "name" D_CHAR30);
 
 ALTER TABLE "country"
@@ -280,3 +280,4 @@ ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 commit;
+exit;
